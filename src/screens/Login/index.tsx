@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Input } from '../../components/Form/Input';
+import { InputIcon } from '../../components/Form/InputIcon';
+import { LoginButton } from '../../components/Form/LoginButton';
 
 import {
-    Container,
     Logo,
     LoginComponents,
     LoginHeader,
     Title,
     Subtitle,
     LoginForm,
-    LoginInput,
-    LoginButton,
 } from './styles';
 
 export function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleSubmit() {
+        const data = {
+            email,
+            password,
+        }
+
+        console.log(data);
+
+        setEmail('');
+        setPassword('');
+    }
+
     return (
 
         <LinearGradient
@@ -35,9 +48,22 @@ export function Login() {
                     <Subtitle>Entre com sua conta cadastrada</Subtitle>
                 </LoginHeader>
                 <LoginForm>
-                    <Input nameIcon="user" placeholder="Username" />
-                    <Input placeholder="Senha" />
-                    <LoginButton title="Entrar"></LoginButton>
+                    <InputIcon
+                        nameIcon="user"
+                        placeholder="Username"
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                    />
+                    <InputIcon
+                        nameIcon="lock"
+                        placeholder="Senha"
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                    <LoginButton
+                        title="Entrar"
+                        onPress={() => handleSubmit()}
+                    />
                 </LoginForm>
             </LoginComponents>
         </LinearGradient>

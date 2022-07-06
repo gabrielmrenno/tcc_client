@@ -34,6 +34,8 @@ export const Subtitle = styled.Text`
 
 export const LoginForm = styled.View`
     padding-top: 35px;
+
+    margin: 10px;
 `;
 
 export const LoginInput = styled.TextInput`
