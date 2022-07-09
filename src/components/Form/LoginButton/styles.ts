@@ -8,7 +8,7 @@ interface Props {
 
 export const Container = styled(RectButton) <Props>`
     width: 100%;
-    background-color: #FFF112;
+    background-color: ${({ theme }) => theme.colors.primary};
     padding: 18px;
     border-radius: 5px;
     align-items: center;
@@ -19,5 +19,5 @@ export const Container = styled(RectButton) <Props>`
 export const Title = styled.Text`
     font-size: ${RFValue(18)}px;
     font-weight: 400;
-    color: #555555;
+    color: ${({ theme }) => theme.colors.gray};
 `;

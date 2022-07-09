@@ -25,22 +25,16 @@ export const LoginHeader = styled.View`
 export const Title = styled.Text`
     font-size: ${RFValue(32)}px;
     font-weight: 500;
-    color: white;
+    color: ${({ theme }) => theme.colors.white};
 `;
 export const Subtitle = styled.Text`
     font-size: ${RFValue(16)}px;
     font-weight: 400;
-    color: white
+    color: ${({ theme }) => theme.colors.white};
 `;
 
 export const LoginForm = styled.View`
     padding-top: 35px;
 
     margin: 10px;
-`;
-
-export const LoginInput = styled.TextInput`
-`;
-export const LoginButton = styled.Button`
-
 `;

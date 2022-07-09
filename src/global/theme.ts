@@ -7,5 +7,7 @@ export default {
         gray: '#555555',
         gray_dark: '#2B2B2B',
         gray_light: '##DDDDDD',
+
+        white: '#FAFAFA',
     },
 }

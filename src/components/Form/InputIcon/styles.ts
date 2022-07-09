@@ -26,7 +26,7 @@ export const InputText = styled(TextInput)`
     flex: 1;
     padding: 16px;
     font-size: ${RFValue(14)}px;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.white};
 
     border-radius: 5px;
 `;
