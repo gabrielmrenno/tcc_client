@@ -5,9 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { Login } from './src/screens/Login';
-import { Home } from './src/routes/Home';
 
 import theme from './src/global/theme';
+import DrawerNavigator from './src/routes/DrawerNavigator';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +20,7 @@ function MyStack() {
       }}
     >
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
     </Stack.Navigator>
   );
 }

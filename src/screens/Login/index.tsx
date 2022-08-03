@@ -29,7 +29,7 @@ export function Login({ navigation }: any) {
 
         navigation.reset({
             index: 0,
-            routes: [{ name: 'Home' }],
+            routes: [{ name: 'DrawerNavigator' }],
         });
 
         setEmail('');
