@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { RectButtonProps } from 'react-native-gesture-handler';
 
 import {
@@ -9,11 +10,13 @@ import {
 interface Props extends RectButtonProps {
     title: string;
     onPress: () => void;
+    isLoading: boolean;
 }
 
 export function LoginButton({
     title,
     onPress,
+    isLoading,
     ...rest
 }: Props) {
     return (
@@ -22,7 +25,7 @@ export function LoginButton({
             {...rest}
         >
             <Title>
-                {title}
+                {isLoading ? <ActivityIndicator size="small" /> : title}
             </Title>
         </Container>
     );

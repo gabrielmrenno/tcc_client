@@ -12,13 +12,12 @@ import {
 
 interface CardProps {
     name: string;
-    code: number;
     city: string;
     phoneNumber: string;
     discount: number;
 }
 
-export function Card({ name, code, city, phoneNumber, discount }: CardProps) {
+export function Card({ name, city, phoneNumber, discount }: CardProps) {
     return (
         <Container>
             <Header>
@@ -31,9 +30,6 @@ export function Card({ name, code, city, phoneNumber, discount }: CardProps) {
             </Header>
             <Body>
                 <Line>
-                    <Description>
-                        Código: {code}
-                    </Description>
                     <Description>
                         Cidade: {city}
                     </Description>

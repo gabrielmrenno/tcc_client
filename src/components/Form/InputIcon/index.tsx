@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInputProps } from 'react-native'
+import { TextInputProps, TextInput } from 'react-native'
 
 import {
     Container,

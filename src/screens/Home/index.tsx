@@ -1,11 +1,17 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Brand, Container, Logo } from './styles';
+import { Button } from 'react-native';
+
+import { useAuth } from '../../contexts/auth';
 
 
 
 export function Home({ navigation }: any) {
-
+    const { signOut } = useAuth();
+    function handleSignOut() {
+        signOut();
+    }
     return (
 
         <LinearGradient
@@ -21,6 +27,7 @@ export function Home({ navigation }: any) {
                 <Brand
                     source={require('../../assets/brand.png')}
                 />
+                <Button title="SignOut" onPress={handleSignOut}>Sign Out</Button>
             </Container>
         </LinearGradient>
     )

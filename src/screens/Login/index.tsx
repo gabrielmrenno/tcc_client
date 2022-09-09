@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { InputIcon } from '../../components/Form/InputIcon';
 import { LoginButton } from '../../components/Form/LoginButton';
+import { useAuth } from '../../contexts/auth';
 
 import {
     Container,
@@ -15,25 +16,23 @@ import {
 } from './styles';
 import { Platform } from 'react-native';
 
+
 export function Login({ navigation }: any) {
-    const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const { signIn } = useAuth();
+
+    const usernameRef = useRef(null);
+
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSubmit() {
-        const data = {
-            email,
-            password,
-        }
+        setIsLoading(true);
+        signIn({ username, password });
 
-        console.log(data);
-
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'DrawerNavigator' }],
-        });
-
-        setEmail('');
+        setUsername('');
         setPassword('');
+        setIsLoading(false);
     }
 
     return (
@@ -57,8 +56,8 @@ export function Login({ navigation }: any) {
                         <InputIcon
                             nameIcon="user"
                             placeholder="Username"
-                            value={email}
-                            onChangeText={(text) => setEmail(text)}
+                            value={username}
+                            onChangeText={(text) => setUsername(text)}
                         />
                         <InputIcon
                             nameIcon="lock"
@@ -70,6 +69,7 @@ export function Login({ navigation }: any) {
                         <LoginButton
                             title="Entrar"
                             onPress={() => handleSubmit()}
+                            isLoading={isLoading}
                         />
                     </LoginForm>
                 </LoginComponents>

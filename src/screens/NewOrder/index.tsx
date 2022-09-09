@@ -2,8 +2,8 @@ import React from "react";
 
 import { Text } from "react-native";
 
-export function Customers() {
+export function NewOrder() {
     return (
-        <Text>Novo Cliente</Text>
+        <Text>Novo Pedido</Text>
     );
 }
