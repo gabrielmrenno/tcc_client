@@ -9,9 +9,6 @@ import { useAuth } from '../../contexts/auth';
 
 export function Home({ navigation }: any) {
     const { signOut } = useAuth();
-    function handleSignOut() {
-        signOut();
-    }
     return (
 
         <LinearGradient
@@ -27,7 +24,6 @@ export function Home({ navigation }: any) {
                 <Brand
                     source={require('../../assets/brand.png')}
                 />
-                <Button title="SignOut" onPress={handleSignOut}>Sign Out</Button>
             </Container>
         </LinearGradient>
     )

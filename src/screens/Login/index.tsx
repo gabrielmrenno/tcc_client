@@ -14,14 +14,14 @@ import {
     Subtitle,
     LoginForm,
 } from './styles';
-import { Platform } from 'react-native';
+import { Platform, TextInput } from 'react-native';
 
 
 export function Login({ navigation }: any) {
     const [isLoading, setIsLoading] = useState(false);
     const { signIn } = useAuth();
 
-    const usernameRef = useRef(null);
+    const usernameRef = useRef<TextInput>(null);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -30,9 +30,11 @@ export function Login({ navigation }: any) {
         setIsLoading(true);
         signIn({ username, password });
 
+
         setUsername('');
         setPassword('');
         setIsLoading(false);
+        usernameRef.current?.focus();
     }
 
     return (
@@ -54,17 +56,18 @@ export function Login({ navigation }: any) {
                     </LoginHeader>
                     <LoginForm>
                         <InputIcon
+                            ref={usernameRef}
                             nameIcon="user"
                             placeholder="Username"
                             value={username}
-                            onChangeText={(text) => setUsername(text)}
+                            onChangeText={(text: string) => setUsername(text)}
                         />
                         <InputIcon
                             nameIcon="lock"
                             placeholder="Senha"
                             value={password}
                             secureTextEntry={true}
-                            onChangeText={(text) => setPassword(text)}
+                            onChangeText={(text: string) => setPassword(text)}
                         />
                         <LoginButton
                             title="Entrar"

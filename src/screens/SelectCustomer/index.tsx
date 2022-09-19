@@ -33,7 +33,7 @@ interface Customer {
 }
 
 
-export function SelectCustomer() {
+export function SelectCustomerModal() {
     const [customers, setCustomers] = useState<Customer[]>([] as Customer[]);
     const [search, setSearch] = useState("");
 
@@ -56,7 +56,7 @@ export function SelectCustomer() {
                     placeholder="Nome fantasia"
                 />
             </SearchCustomer>
-            {
+            {/* {
                 customers.map((customer) => {
                     return (
                         <Card
@@ -68,9 +68,9 @@ export function SelectCustomer() {
                         />
                     );
                 })
-            }
+            } */}
             <Footer>
-                <LoginButton title="Adicionar" onPress={() => { }} />
+                {/* <LoginButton title="Adicionar" onPress={() => { }} /> */}
             </Footer>
         </Container>
     );

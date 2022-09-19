@@ -72,7 +72,7 @@ export function AuthProvider({ children }: Props) {
         })
             .catch((err) => {
                 // console.log(err.response.data.message);
-                Alert.alert("Atenção", err.response.data.message, [{ text: "Ok", onPress: () => console.log("OK Pressed") }]);
+                Alert.alert("Atenção", err.response.data.message, [{ text: "Ok" }]);
             })
     }
     function signOut() {

@@ -1,5 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+
+import { useAuth } from '../../../contexts/auth';
 
 import {
     Header,
@@ -9,21 +13,45 @@ import {
     LeaveIcon,
 } from './styles';
 
-export function HeaderDrawer() {
+export function HeaderDrawer({ navigation }: DrawerScreenProps<any>) {
+    const { signOut } = useAuth();
+
     return (
         <Header>
-            <IconSideBar
-                name="menu"
-            />
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <IconSideBar
+                    name="menu"
+                />
+            </TouchableOpacity>
             <AccountInfo>
-                <UserIcon
-                    name="user"
-                />
-                <LeaveIcon
-                    name="log-out"
-                />
+                <TouchableOpacity
+                    onPress={() => console.log("Abrir Perfil")}
+                >
+                    <UserIcon
+                        name="user"
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => signOut()}
+                >
+                    <LeaveIcon
+                        name="log-out"
+                    />
+                </TouchableOpacity>
             </AccountInfo>
             <StatusBar style='dark' />
         </Header>
     )
+}
+
+export function HeaderSideBar() {
+    return (
+        <IconSideBar
+            name="menu"
+        />
+    )
+}
+
+export function HeaderBackground() {
+    <Header />
 }
