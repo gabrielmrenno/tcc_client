@@ -1,8 +1,7 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerContentComponentProps } from '@react-navigation/drawer';
 
-import { Container, ItemList } from './styles';
+import { DrawerHeader, DrawerIcon, Line } from './styles';
 
 export interface DrawerContentProps {
     contentScrollViewProps: React.ComponentProps<typeof DrawerContentScrollView>,
@@ -12,8 +11,12 @@ export interface DrawerContentProps {
 
 export function DrawerContent(props: DrawerContentComponentProps) {
     return (
-        <Container {...props}>
-            <ItemList {...props} />
-        </Container>
+        <DrawerContentScrollView {...props}>
+            <DrawerHeader>
+                <DrawerIcon source={require('../../../assets/logo.png')} />
+            </DrawerHeader>
+            <Line />
+            <DrawerItemList {...props} />
+        </DrawerContentScrollView>
     );
 }

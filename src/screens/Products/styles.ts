@@ -12,7 +12,7 @@ export const HeaderTitle = styled.Text`
     color: ${({ theme }) => theme.colors.primary};
     font-weight: 500;
 
-    padding: 24px 20px;
+    margin: ${RFValue(24)}px ${RFValue(20)}px;
 `;
 
 export const SearchProduct = styled.View`

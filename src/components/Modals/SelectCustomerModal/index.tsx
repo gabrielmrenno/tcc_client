@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
-import { api } from "../../../services/api";
-import { InputIcon } from "../../components/Form/InputIcon";
-import { LoginButton } from "../../components/Form/LoginButton";
-import { Card } from "../../components/ScreenComponents/Card";
+import { api } from "../../../../services/api";
+import { InputIcon } from "../../Form/InputIcon";
+import { LoginButton } from "../../Form/LoginButton";
+import { Card } from "../../ScreenComponents/Card";
 
 import {
     Container,
     SearchText,
     SearchCustomer,
     Footer,
+    BackgroundContainer,
+    HeaderContainer,
+    CloseIcon,
 } from "./styles";
 
 interface Customer {
@@ -32,8 +35,12 @@ interface Customer {
     updatedAt: string;
 }
 
+interface SelectCustomerModalProps {
+    onPress: () => void;
+}
 
-export function SelectCustomerModal() {
+
+export function SelectCustomerModal({ onPress }: SelectCustomerModalProps) {
     const [customers, setCustomers] = useState<Customer[]>([] as Customer[]);
     const [search, setSearch] = useState("");
 
@@ -45,18 +52,26 @@ export function SelectCustomerModal() {
     }, [])
 
     return (
-        <Container>
-            <SearchCustomer>
-                <SearchText>
-                    Adicionar Cliente
-                </SearchText>
-                <InputIcon
-                    value=""
-                    nameIcon="search"
-                    placeholder="Nome fantasia"
-                />
-            </SearchCustomer>
-            {/* {
+        <>
+            <BackgroundContainer />
+            <Container>
+                <SearchCustomer>
+                    <HeaderContainer>
+                        <SearchText>
+                            Adicionar Cliente
+                        </SearchText>
+                        <CloseIcon
+                            name="x"
+                            onPress={onPress}
+                        />
+                    </HeaderContainer>
+                    <InputIcon
+                        value=""
+                        nameIcon="search"
+                        placeholder="Nome fantasia"
+                    />
+                </SearchCustomer>
+                {/* {
                 customers.map((customer) => {
                     return (
                         <Card
@@ -69,9 +84,10 @@ export function SelectCustomerModal() {
                     );
                 })
             } */}
-            <Footer>
-                {/* <LoginButton title="Adicionar" onPress={() => { }} /> */}
-            </Footer>
-        </Container>
+                <Footer>
+                    {/* <LoginButton title="Adicionar" onPress={() => { }} /> */}
+                </Footer>
+            </Container>
+        </>
     );
 }

@@ -1,10 +1,11 @@
 import React from "react";
 import { createDrawerNavigator, DrawerScreenProps } from '@react-navigation/drawer';
 
-import { HeaderDrawer } from '../components/ScreenComponents/HeaderDrawer'
+import { HeaderDrawer } from '../components/Drawer/HeaderDrawer'
 import { Home } from "../screens/Home";
 import { NewOrder } from "../screens/NewOrder";
 import { Products } from "../screens/Products/";
+import { DrawerContent } from "../components/Drawer/DrawerContent";
 
 const AppStack = createDrawerNavigator();
 
@@ -25,11 +26,9 @@ export function AppRoutes() {
                 },
                 drawerActiveTintColor: '#808001'
             })}
+            drawerContent={(props) => <DrawerContent {...props} />}
         >
-            {/* <AppStack.Screen
-                name="Home"
-                component={Home}
-            /> */}
+            <AppStack.Screen name="Home" component={Home} />
             <AppStack.Screen name="Novo Pedido" component={NewOrder} />
             <AppStack.Screen name="Produtos" component={Products} />
         </AppStack.Navigator >
