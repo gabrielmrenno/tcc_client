@@ -57,3 +57,8 @@ export const Footer = styled.View`
 
     padding-bottom: ${RFValue(16)}px;
 `;
+
+export const Separator = styled.View`
+    border-bottom: 1px solid black;
+    height: 1px
+`;

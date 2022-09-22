@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
 import { api } from "../../../../services/api";
 import { InputIcon } from "../../Form/InputIcon";
@@ -14,6 +14,7 @@ import {
     BackgroundContainer,
     HeaderContainer,
     CloseIcon,
+    Separator,
 } from "./styles";
 
 interface Customer {
@@ -66,24 +67,27 @@ export function SelectCustomerModal({ onPress }: SelectCustomerModalProps) {
                         />
                     </HeaderContainer>
                     <InputIcon
-                        value=""
+                        value={search}
                         nameIcon="search"
                         placeholder="Nome fantasia"
+                        onChangeText={(text: string) => setSearch(text)}
                     />
                 </SearchCustomer>
-                {/* {
-                customers.map((customer) => {
-                    return (
-                        <Card
-                            key={customer.id}
-                            name={customer.nome}
-                            city={customer.cidade}
-                            phoneNumber={customer.telefone}
-                            discount={customer.desconto}
-                        />
-                    );
-                })
-            } */}
+                <FlatList
+                    data={customers}
+                    style={{}}
+                    keyExtractor={(customer) => customer.id}
+                    renderItem={
+                        ({ item }) =>
+                            <Card
+                                key={item.id}
+                                name={item.nome}
+                                city={item.cidade}
+                                phoneNumber={item.telefone}
+                                discount={item.desconto}
+                            />
+                    }
+                />
                 <Footer>
                     {/* <LoginButton title="Adicionar" onPress={() => { }} /> */}
                 </Footer>
