@@ -3,7 +3,7 @@ import { FlatList, Text, View } from "react-native";
 
 import { api } from "../../../../services/api";
 import { InputIcon } from "../../Form/InputIcon";
-import { LoginButton } from "../../Form/LoginButton";
+import { StyledButton } from "../../Form/StyledButton";
 import { Card } from "../../ScreenComponents/Card";
 
 import {
@@ -17,7 +17,7 @@ import {
     Separator,
 } from "./styles";
 
-interface Customer {
+export interface Customer {
     id: string;
     nome: string;
     nomeFantasia: string;
@@ -37,12 +37,20 @@ interface Customer {
 }
 
 interface SelectCustomerModalProps {
-    onPress: () => void;
+    closeModal: () => void;
+    selectedCustomer: Customer | undefined;
+    setSelectedCustomer: (customer: Customer) => void;
 }
 
 
-export function SelectCustomerModal({ onPress }: SelectCustomerModalProps) {
+export function SelectCustomerModal({
+    closeModal,
+    selectedCustomer,
+    setSelectedCustomer
+}: SelectCustomerModalProps) {
     const [customers, setCustomers] = useState<Customer[]>([] as Customer[]);
+    const [activeCustomer, setActiveCustomer] = useState<Customer>();
+
     const [search, setSearch] = useState("");
 
     useEffect(() => {
@@ -51,6 +59,13 @@ export function SelectCustomerModal({ onPress }: SelectCustomerModalProps) {
                 setCustomers(response.data);
             });
     }, [])
+
+    function handleSelectCustomer(item: Customer) {
+        setSelectedCustomer(item);
+    }
+    function handleSelectActiveCustomer(item: Customer) {
+        setActiveCustomer(item);
+    }
 
     return (
         <>
@@ -63,7 +78,7 @@ export function SelectCustomerModal({ onPress }: SelectCustomerModalProps) {
                         </SearchText>
                         <CloseIcon
                             name="x"
-                            onPress={onPress}
+                            onPress={() => closeModal()}
                         />
                     </HeaderContainer>
                     <InputIcon
@@ -80,18 +95,24 @@ export function SelectCustomerModal({ onPress }: SelectCustomerModalProps) {
                     renderItem={
                         ({ item }) =>
                             <Card
+                                active={!!activeCustomer && activeCustomer?.id === item.id}
                                 key={item.id}
                                 name={item.nome}
                                 city={item.cidade}
                                 phoneNumber={item.telefone}
                                 discount={item.desconto}
+                                onPress={() => handleSelectActiveCustomer(item)}
                             />
                     }
                 />
-                <Footer>
-                    {/* <LoginButton title="Adicionar" onPress={() => { }} /> */}
-                </Footer>
             </Container>
+            <Footer>
+                <StyledButton title="Selecionar Cliente" onPress={() => {
+                    activeCustomer && handleSelectCustomer(activeCustomer);
+                    closeModal();
+                }} />
+            </Footer>
+
         </>
     );
 }

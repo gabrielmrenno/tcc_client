@@ -2,9 +2,13 @@ import styled from "styled-components/native";
 import { EvilIcons } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const Container = styled.View`
+interface BackgroundProps {
+    active: boolean;
+}
+
+export const Container = styled.TouchableOpacity<BackgroundProps>`
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme, active }) => active ? theme.colors.primary_light : theme.colors.white};
     border-radius: 10px;
 
     padding: 16px;

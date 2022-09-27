@@ -51,11 +51,13 @@ export const SearchText = styled.Text`
 export const Footer = styled.View`
     width: 100%;
 
+    background-color: ${({ theme }) => theme.colors.gray_dark};
     position: absolute;
     bottom: 0;
-    right: ${RFValue(16)}px;
 
-    padding-bottom: ${RFValue(16)}px;
+    border-radius: ${RFValue(10)}px;
+
+    padding: ${RFValue(16)}px;
 `;
 
 export const Separator = styled.View`

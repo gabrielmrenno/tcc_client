@@ -10,10 +10,10 @@ import {
 interface Props extends RectButtonProps {
     title: string;
     onPress: () => void;
-    isLoading: boolean;
+    isLoading?: boolean;
 }
 
-export function LoginButton({
+export function StyledButton({
     title,
     onPress,
     isLoading,

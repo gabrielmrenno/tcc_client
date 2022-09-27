@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { InputIcon } from '../../components/Form/InputIcon';
-import { LoginButton } from '../../components/Form/LoginButton';
+import { StyledButton } from '../../components/Form/StyledButton';
 import { useAuth } from '../../contexts/auth';
 
 import {
@@ -69,7 +69,7 @@ export function Login({ navigation }: any) {
                             secureTextEntry={true}
                             onChangeText={(text: string) => setPassword(text)}
                         />
-                        <LoginButton
+                        <StyledButton
                             title="Entrar"
                             onPress={() => handleSubmit()}
                             isLoading={isLoading}

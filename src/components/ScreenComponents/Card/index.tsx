@@ -1,4 +1,5 @@
 import React from 'react';
+import { Customer } from '../../Modals/SelectCustomerModal';
 
 import {
     Container,
@@ -10,16 +11,21 @@ import {
     Description,
 } from './styles';
 
-interface CardProps {
+export interface CardProps {
     name: string;
     city: string;
     phoneNumber: string;
     discount: number;
+    active: boolean;
+    onPress: () => void;
 }
 
-export function Card({ name, city, phoneNumber, discount }: CardProps) {
+export function Card({ name, city, phoneNumber, discount, active, onPress }: CardProps) {
     return (
-        <Container>
+        <Container
+            active={active}
+            onPress={onPress}
+        >
             <Header>
                 <Icon
                     name="location"

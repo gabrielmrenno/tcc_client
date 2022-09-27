@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Modal } from 'react-native';
-import { SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
+import { Customer, SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
 import { TitlePlus } from "../../components/ScreenComponents/TitlePlus";
 import {
     Container,
@@ -9,8 +9,8 @@ import {
 } from './styles';
 
 export function NewOrder() {
-    const [customer, setCustomer] = useState(false);
     const [openSetCustomerModal, setOpenSetCustomerModal] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
 
     function handleOpenSetCustomerModal() {
         setOpenSetCustomerModal(true);
@@ -26,9 +26,9 @@ export function NewOrder() {
                     Novo Pedido
                 </HeaderTitle>
                 <View>
-                    {customer
+                    {!!selectedCustomer
                         ? <View>
-                            <Text>Info Cliente</Text>
+                            <Text>{selectedCustomer.nome}</Text>
                         </View>
                         : <TitlePlus
                             title="Selecionar Cliente"
@@ -49,7 +49,11 @@ export function NewOrder() {
                 presentationStyle="overFullScreen"
                 visible={openSetCustomerModal}
             >
-                <SelectCustomerModal onPress={handleCloseSetCustomerModal} />
+                <SelectCustomerModal
+                    closeModal={handleCloseSetCustomerModal}
+                    selectedCustomer={selectedCustomer}
+                    setSelectedCustomer={setSelectedCustomer}
+                />
             </Modal>
         </>
     );
