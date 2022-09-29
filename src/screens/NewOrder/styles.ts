@@ -5,7 +5,7 @@ export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.gray};
 
-    padding: 24px 20px;
+    padding: 20px 20px;
 `;
 
 export const HeaderTitle = styled.Text`

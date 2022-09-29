@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons"
 
 export const Header = styled.View`
     width: 100%;
-    height: ${getStatusBarHeight() + RFValue(50)}px;
+    height: ${getStatusBarHeight() + RFValue(40)}px;
 
     padding-top: ${getStatusBarHeight()}px;
 

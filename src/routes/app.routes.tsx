@@ -6,6 +6,8 @@ import { Home } from "../screens/Home";
 import { NewOrder } from "../screens/NewOrder";
 import { Products } from "../screens/Products/";
 import { DrawerContent } from "../components/Drawer/DrawerContent";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const AppStack = createDrawerNavigator();
 
@@ -14,6 +16,9 @@ export function AppRoutes() {
         <AppStack.Navigator
             screenOptions={({ navigation, route }: DrawerScreenProps<any>) => ({
                 headerTitle: '',
+                headerStyle: {
+                    height: getStatusBarHeight() + RFValue(40)
+                },
                 headerBackground: () => (
                     <HeaderDrawer
                         navigation={navigation}

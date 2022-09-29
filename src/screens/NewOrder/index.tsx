@@ -2,21 +2,33 @@ import React, { useState } from "react";
 import { View, Text, Modal } from 'react-native';
 import { Customer, SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
 import { TitlePlus } from "../../components/ScreenComponents/TitlePlus";
+import { CustomerCard } from "../../components/ScreenComponents/CustomerCard"
 import {
     Container,
     HeaderTitle,
     FooterResults,
 } from './styles';
+import { SelectProductModal } from "../../components/Modals/SelectProductModal";
 
 export function NewOrder() {
     const [openSetCustomerModal, setOpenSetCustomerModal] = useState(false);
+    const [openSetProductModal, setOpenSetProductModal] = useState(false);
+
     const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
+    const [selectedProduct, setSelectedProduct] = useState('');
 
     function handleOpenSetCustomerModal() {
         setOpenSetCustomerModal(true);
     }
     function handleCloseSetCustomerModal() {
         setOpenSetCustomerModal(false);
+    }
+
+    function handleOpenSetProductModal() {
+        setOpenSetProductModal(true);
+    }
+    function handleCloseSetProductModal() {
+        setOpenSetProductModal(false);
     }
 
     return (
@@ -27,9 +39,7 @@ export function NewOrder() {
                 </HeaderTitle>
                 <View>
                     {!!selectedCustomer
-                        ? <View>
-                            <Text>{selectedCustomer.nome}</Text>
-                        </View>
+                        ? <CustomerCard customer={selectedCustomer} />
                         : <TitlePlus
                             title="Selecionar Cliente"
                             onPress={handleOpenSetCustomerModal}
@@ -37,7 +47,7 @@ export function NewOrder() {
                 </View>
 
                 <View>
-                    <TitlePlus title="Lista de Produtos" onPress={handleOpenSetCustomerModal} />
+                    <TitlePlus title="Lista de Produtos" onPress={() => handleOpenSetProductModal()} />
                 </View>
             </Container>
             <FooterResults>
@@ -53,6 +63,17 @@ export function NewOrder() {
                     closeModal={handleCloseSetCustomerModal}
                     selectedCustomer={selectedCustomer}
                     setSelectedCustomer={setSelectedCustomer}
+                />
+            </Modal>
+
+            <Modal
+                transparent={true}
+                presentationStyle="overFullScreen"
+                visible={openSetProductModal}
+            >
+                <SelectProductModal
+                    closeModal={handleCloseSetProductModal}
+                // setSelectedProduct={setSelectedProduct}
                 />
             </Modal>
         </>
