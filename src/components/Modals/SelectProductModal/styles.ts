@@ -2,6 +2,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons'
 
+export const ModalContainer = styled.View`
+    width: 100%;
+    flex: 1;
+`;
+
 export const BackgroundContainer = styled.View`
     flex: 1;
     background-color: rgba(43, 43, 43, 0.8);
@@ -9,8 +14,8 @@ export const BackgroundContainer = styled.View`
     margin-bottom: -10px;
 `;
 
-export const Container = styled.View`
-    height: ${RFValue(330)}px;
+export const Container = styled.KeyboardAvoidingView`
+    flex: 1;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.gray_dark};
 
@@ -45,3 +50,40 @@ export const SearchText = styled.Text`
     color: ${({ theme }) => theme.colors.primary};
     font-weight: 500;
 `;
+
+export const Content = styled.View`
+    
+`;
+
+export const DetailsContainer = styled.View`
+    width: 100%;
+    flex-direction: row;
+
+    justify-content: space-between;
+`;
+
+export const InputContainer = styled.View`
+    width: 48%;
+`;
+
+export const ProductDetailsContainer = styled.View`
+    padding-bottom: ${RFValue(8)}px;
+`;
+
+export const ProductDetails = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-bottom: ${RFValue(8)}px;
+`;
+
+export const Label = styled.Text`
+    font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.white};
+`;
+
+export const Value = styled.Text`
+    font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.white};
+`;
+

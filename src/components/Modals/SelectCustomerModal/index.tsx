@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 
-import { api } from "../../../../services/api";
+import { api } from "../../../services/api";
 import { InputIcon } from "../../Form/InputIcon";
 import { StyledButton } from "../../Form/StyledButton";
 import { Card } from "../../ScreenComponents/Card";
@@ -14,7 +14,6 @@ import {
     BackgroundContainer,
     HeaderContainer,
     CloseIcon,
-    Separator,
 } from "./styles";
 
 export interface Customer {

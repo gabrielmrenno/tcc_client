@@ -6,6 +6,16 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled(View)`
     width: 100%;
+`;
+
+export const Title = styled.Text`
+    font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.white};
+
+    margin-bottom: ${RFValue(8)}px;
+`;
+
+export const InputContainer = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;

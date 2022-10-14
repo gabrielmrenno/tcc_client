@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Platform, TextInput } from 'react-native';
 
 import { InputIcon } from '../../components/Form/InputIcon';
 import { StyledButton } from '../../components/Form/StyledButton';
@@ -14,7 +15,7 @@ import {
     Subtitle,
     LoginForm,
 } from './styles';
-import { Platform, TextInput } from 'react-native';
+
 
 
 export function Login({ navigation }: any) {
@@ -23,15 +24,15 @@ export function Login({ navigation }: any) {
 
     const usernameRef = useRef<TextInput>(null);
 
-    const [username, setUsername] = useState('');
+    const [usernameData, setUsernameData] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSubmit() {
         setIsLoading(true);
-        signIn({ username, password });
+        signIn({ usernameData, password });
 
 
-        setUsername('');
+        setUsernameData('');
         setPassword('');
         setIsLoading(false);
         usernameRef.current?.focus();
@@ -59,8 +60,8 @@ export function Login({ navigation }: any) {
                             ref={usernameRef}
                             nameIcon="user"
                             placeholder="Username"
-                            value={username}
-                            onChangeText={(text: string) => setUsername(text)}
+                            value={usernameData}
+                            onChangeText={(text: string) => setUsernameData(text)}
                         />
                         <InputIcon
                             nameIcon="lock"

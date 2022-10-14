@@ -2,19 +2,25 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { api } from '../../services/api';
+import { api } from '../services/api';
 
 interface AuthContextData {
     signed: boolean;
     username: string | null;
-    signIn({ username, password }: SignInData): void;
+    signIn({ usernameData, password }: SignInData): void;
     signOut(): void;
 }
 
 interface SignInData {
-    username: string;
+    usernameData: string;
     password: string;
 }
+
+interface AuthenticateUserResponse {
+    username: string;
+    token: string;
+}
+
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
@@ -25,6 +31,7 @@ type Props = {
 export function AuthProvider({ children }: Props) {
     const [user, setUser] = useState<string | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 
     useEffect(() => {
         async function loadStorageData() {
@@ -56,24 +63,26 @@ export function AuthProvider({ children }: Props) {
         loadStorageData();
     }, [])
 
-    async function signIn({ username, password }: SignInData) {
-        api.post('/login/sessions', {
-            username: username,
+    async function signIn({ usernameData, password }: SignInData) {
+        await api.post<AuthenticateUserResponse>('/login/sessions', {
+            username: usernameData,
             password: password
-        }).then(async (response) => {
-            const { username, token } = response.data;
-            setUser(username);
+        }).then(response => {
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
+
+            async function setAsyncData() {
+                await AsyncStorage.setItem('@SalesAppTCC:user', response.data.username);
+                await AsyncStorage.setItem('@SalesAppTCC:user', response.data.token);
+            }
+
+            setAsyncData();
+
+            setUser(response.data.username);
             setIsAuthenticated(true);
+        }).catch((err) => {
+            Alert.alert("Atenção", err.response.data.message, [{ text: "Ok" }]);
+        });
 
-            api.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-
-            await AsyncStorage.setItem('@SalesAppTCC:user', username);
-            await AsyncStorage.setItem('@SalesAppTCC:user', token);
-        })
-            .catch((err) => {
-                // console.log(err.response.data.message);
-                Alert.alert("Atenção", err.response.data.message, [{ text: "Ok" }]);
-            })
     }
     function signOut() {
         AsyncStorage.clear().then(() => {
