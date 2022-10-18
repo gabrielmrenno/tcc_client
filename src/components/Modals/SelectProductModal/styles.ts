@@ -42,7 +42,7 @@ export const CloseIcon = styled(Feather)`
     color: ${({ theme }) => theme.colors.primary_light};
 `;
 
-export const SearchCustomer = styled.View`
+export const SearchProducts = styled.View`
     margin-bottom: ${RFValue(8)}px;
 `;
 
@@ -59,6 +59,7 @@ export const Content = styled.View`
 export const DropdownProducts = styled(Dropdown)`
     flex: 1;
     padding: 8px 16px;
+    margin-bottom: ${RFValue(8)}px;
     font-size: ${RFValue(14)}px;
     background-color: ${({ theme }) => theme.colors.white};
 

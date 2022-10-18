@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import { api } from '../../../services/api';
 
 import { InputIcon } from '../../Form/InputIcon';
 import { StyledButton } from '../../Form/StyledButton';
@@ -8,7 +8,7 @@ import {
     ModalContainer,
     BackgroundContainer,
     Container,
-    SearchCustomer,
+    SearchProducts,
     HeaderContainer,
     SearchText,
     CloseIcon,
@@ -26,23 +26,33 @@ interface SelectProductModalProps {
     closeModal: () => void;
 }
 
-const data = [
-    { label: 'Item 1' },
-    { label: 'Item 2' },
-    { label: 'Item 3' },
-    { label: 'Item 4' },
-    { label: 'Item 5' },
-    { label: 'Item 6' },
-    { label: 'Item 7' },
-    { label: 'Item 8' },
-];
+interface ProductsDTO {
+    "createdAt": string,
+    "grupo": string,
+    "id": string,
+    "nome": string,
+    "peso": number,
+    "preco": number,
+    "unidade": string,
+    "updatedAt": string,
+}
 
 export function SelectProductModal({ closeModal }: SelectProductModalProps) {
+    const [products, setProducts] = useState<ProductsDTO[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<ProductsDTO>();
+
+    useEffect(() => {
+        api.get("/produtos")
+            .then((response) => {
+                setProducts(response.data);
+            });
+    }, [])
+
     return (
         <ModalContainer >
             <BackgroundContainer />
             <Container behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                <SearchCustomer>
+                <SearchProducts>
                     <HeaderContainer>
                         <SearchText>
                             Adicionar Produto
@@ -52,21 +62,15 @@ export function SelectProductModal({ closeModal }: SelectProductModalProps) {
                             onPress={() => closeModal()}
                         />
                     </HeaderContainer>
-                </SearchCustomer>
+                </SearchProducts>
                 <Content>
                     <DropdownProducts
-                        data={data}
-                        labelField="label"
-                        valueField="value"
-                        onChange={() => console.log("mudou")}
+                        data={products}
+                        labelField="nome"
+                        valueField="nome"
+                        onChange={(item: ProductsDTO) => setSelectedProduct(item)}
                         placeholder={'Selecione o produto'}
                     />
-                    {/* <InputIcon
-                        // value={search}
-                        nameIcon="search"
-                        placeholder="Nome fantasia"
-                    // onChangeText={(text: string) => setSearch(text)}
-                    /> */}
                     <DetailsContainer>
                         <InputContainer>
                             <InputIcon
@@ -86,16 +90,16 @@ export function SelectProductModal({ closeModal }: SelectProductModalProps) {
 
 
                 </Content>
-                <ProductDetailsContainer>
+                {selectedProduct && <ProductDetailsContainer>
                     <ProductDetails>
                         <Label>Valor unitário:</Label>
-                        <Value>R$ 40,00</Value>
+                        <Value>R$ {selectedProduct.preco}</Value>
                     </ProductDetails>
                     <ProductDetails>
                         <Label>Valor total:</Label>
-                        <Value>R$ 200,00</Value>
+                        <Value>R$ {selectedProduct.preco * 10}</Value>
                     </ProductDetails>
-                </ProductDetailsContainer>
+                </ProductDetailsContainer>}
 
                 <StyledButton
                     style={{ marginBottom: 20 }}
