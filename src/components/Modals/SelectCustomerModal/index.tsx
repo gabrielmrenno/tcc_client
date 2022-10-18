@@ -52,6 +52,10 @@ export function SelectCustomerModal({
 
     const [search, setSearch] = useState("");
 
+    const filteredCustomer = search.length > 0
+        ? customers.filter(customer => customer.nome.includes(search))
+        : customers;
+
     useEffect(() => {
         api.get("/clients")
             .then((response) => {
@@ -88,7 +92,7 @@ export function SelectCustomerModal({
                     />
                 </SearchCustomer>
                 <FlatList
-                    data={customers}
+                    data={filteredCustomer}
                     style={{}}
                     keyExtractor={(customer) => customer.id}
                     renderItem={

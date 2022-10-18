@@ -1,6 +1,7 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { Feather } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export const ModalContainer = styled.View`
     width: 100%;
@@ -53,6 +54,17 @@ export const SearchText = styled.Text`
 
 export const Content = styled.View`
     
+`;
+
+export const DropdownProducts = styled(Dropdown)`
+    flex: 1;
+    padding: 8px 16px;
+    font-size: ${RFValue(14)}px;
+    background-color: ${({ theme }) => theme.colors.white};
+
+    color: ${({ theme }) => theme.colors.gray_light};
+
+    border-radius: 5px;
 `;
 
 export const DetailsContainer = styled.View`

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 import { InputIcon } from '../../Form/InputIcon';
 import { StyledButton } from '../../Form/StyledButton';
@@ -12,6 +13,7 @@ import {
     SearchText,
     CloseIcon,
     Content,
+    DropdownProducts,
     DetailsContainer,
     InputContainer,
     ProductDetailsContainer,
@@ -23,6 +25,17 @@ import {
 interface SelectProductModalProps {
     closeModal: () => void;
 }
+
+const data = [
+    { label: 'Item 1' },
+    { label: 'Item 2' },
+    { label: 'Item 3' },
+    { label: 'Item 4' },
+    { label: 'Item 5' },
+    { label: 'Item 6' },
+    { label: 'Item 7' },
+    { label: 'Item 8' },
+];
 
 export function SelectProductModal({ closeModal }: SelectProductModalProps) {
     return (
@@ -41,12 +54,19 @@ export function SelectProductModal({ closeModal }: SelectProductModalProps) {
                     </HeaderContainer>
                 </SearchCustomer>
                 <Content>
-                    <InputIcon
+                    <DropdownProducts
+                        data={data}
+                        labelField="label"
+                        valueField="value"
+                        onChange={() => console.log("mudou")}
+                        placeholder={'Selecione o produto'}
+                    />
+                    {/* <InputIcon
                         // value={search}
                         nameIcon="search"
                         placeholder="Nome fantasia"
                     // onChangeText={(text: string) => setSearch(text)}
-                    />
+                    /> */}
                     <DetailsContainer>
                         <InputContainer>
                             <InputIcon
