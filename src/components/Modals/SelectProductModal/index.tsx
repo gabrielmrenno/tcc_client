@@ -50,9 +50,11 @@ export function SelectProductModal({
         setListOfProducts([
             ...listOfProducts,
             {
-                produto: product,
+                product,
                 discount,
-                quantidade: quantity,
+                quantity,
+                totalPrice: (product.preco * quantity) * (1 - discount / 100),
+                totalWeight: (product.peso * quantity),
             }
         ]);
         closeModal();

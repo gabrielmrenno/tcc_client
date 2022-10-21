@@ -27,7 +27,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <Header>
                 <HeaderContainer>
                     <InfoIcon name="shopping-bag" />
-                    <Title>{product.produto.nome}</Title>
+                    <Title>{product.product.nome}</Title>
                 </HeaderContainer>
                 <IconsContainer>
                     <TouchableOpacity onPress={() => console.log("Edit")}>
@@ -45,16 +45,16 @@ export function ProductCard({ product }: ProductCardProps) {
 
             <Content>
                 <Line>
-                    <Description>Quantidade: {product.quantidade}</Description>
-                    <Description>Peso total: {product.quantidade * product.produto.peso} Kg</Description>
+                    <Description>Quantidade: {product.quantity}</Description>
+                    <Description>Peso total: {product.quantity * product.product.peso} Kg</Description>
                 </Line>
                 <Line>
-                    <Description>Valor unitário: R$ {product.produto.preco.toFixed(2)}</Description>
+                    <Description>Valor unitário: R$ {product.product.preco.toFixed(2)}</Description>
                     <Description>Desconto: {product.discount} %</Description>
                 </Line>
                 <Line>
                     <DescriptionBold>Valor total:</DescriptionBold>
-                    <DescriptionBold>R$ {((product.produto.preco * product.quantidade) * (1 - product.discount / 100)).toFixed(2)}</DescriptionBold>
+                    <DescriptionBold>R$ {((product.product.preco * product.quantity) * (1 - product.discount / 100)).toFixed(2)}</DescriptionBold>
                 </Line>
             </Content>
         </Container>

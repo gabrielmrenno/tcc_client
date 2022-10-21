@@ -30,6 +30,12 @@ export function NewOrder() {
     const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
     const [listOfProducts, setListOfProducts] = useState<OrderProductDTO[]>([] as OrderProductDTO[]);
 
+    const weights = listOfProducts.map((current) => current.totalWeight);
+    const totalWeight = weights.reduce((current, acc) => acc += current, 0);
+
+    const prices = listOfProducts.map((current) => current.totalPrice);
+    const totalPrice = prices.reduce((current, acc) => acc += current, 0);
+
     function handleOpenSetCustomerModal() {
         setOpenSetCustomerModal(true);
     }
@@ -65,25 +71,25 @@ export function NewOrder() {
 
                 <ProductList
                     data={listOfProducts}
-                    keyExtractor={(item) => item.produto.id}
+                    keyExtractor={(item) => item.product.id}
                     renderItem={({ item }) => <ProductCard product={item} />}
                 />
             </Container>
 
-            <FooterResults>
+            {(!!selectedCustomer && Object.keys(listOfProducts).length !== 0) && <FooterResults>
                 <Line>
                     <Description>Peso Total:</Description>
-                    <Description>12 Kg</Description>
+                    <Description>{totalWeight.toFixed(0)} Kg</Description>
                 </Line>
                 <Line>
                     <Description>Valor total:</Description>
-                    <Description>R$ 1000,00</Description>
+                    <Description>R$ {totalPrice.toFixed(2)}</Description>
                 </Line>
                 <FinishOrder onPress={() => console.log("Finalizar Pedido")}>
                     <Icon name="shopping-cart" />
                     <FinishOrderText>Finalizar Pedido</FinishOrderText>
                 </FinishOrder>
-            </FooterResults>
+            </FooterResults>}
 
             <Modal
                 transparent={true}
