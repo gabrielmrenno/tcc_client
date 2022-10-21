@@ -10,6 +10,7 @@ import {
 interface Props extends RectButtonProps {
     title: string;
     onPress: () => void;
+    enabled?: boolean;
     isLoading?: boolean;
 }
 
@@ -17,12 +18,14 @@ export function StyledButton({
     title,
     onPress,
     isLoading,
+    enabled = true,
     ...rest
 }: Props) {
     return (
         <Container
-            onPress={onPress}
             {...rest}
+            onPress={onPress}
+            enabled={enabled}
         >
             <Title>
                 {isLoading ? <ActivityIndicator size="small" /> : title}

@@ -3,12 +3,14 @@ import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from "react-native-responsive-fontsize";
 
 interface Props {
-    children: React.ReactNode;
+    children: React.ReactNode[];
+    enabled: boolean;
 }
 
 export const Container = styled(RectButton) <Props>`
     width: 100%;
     background-color: ${({ theme }) => theme.colors.primary};
+    opacity: ${({ theme, enabled }) => enabled ? 1 : .5};
     padding: 18px;
     border-radius: 5px;
     align-items: center;

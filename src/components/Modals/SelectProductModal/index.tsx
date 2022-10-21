@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
+
+import { ProductsDTO } from '../../../types/DTOs/ProductsDTO';
+import { OrderProductDTO } from "../../../types/DTOs/OrderProductDTO";
 import { api } from '../../../services/api';
 
 import { InputIcon } from '../../Form/InputIcon';
+
 import { StyledButton } from '../../Form/StyledButton';
 import {
     ModalContainer,
@@ -24,29 +28,42 @@ import {
 
 interface SelectProductModalProps {
     closeModal: () => void;
+    listOfProducts: OrderProductDTO[];
+    setListOfProducts: (orderProduct: OrderProductDTO[]) => void;
 }
 
-interface ProductsDTO {
-    "createdAt": string,
-    "grupo": string,
-    "id": string,
-    "nome": string,
-    "peso": number,
-    "preco": number,
-    "unidade": string,
-    "updatedAt": string,
-}
+export function SelectProductModal({
+    closeModal,
+    listOfProducts,
+    setListOfProducts
+}: SelectProductModalProps) {
+    const [products, setProducts] = useState<ProductsDTO[]>([] as ProductsDTO[]);
+    const [product, setProduct] = useState<ProductsDTO>({} as ProductsDTO);
+    const [discount, setDiscount] = useState(0);
+    const [quantity, setQuantity] = useState(0);
 
-export function SelectProductModal({ closeModal }: SelectProductModalProps) {
-    const [products, setProducts] = useState<ProductsDTO[]>([]);
-    const [selectedProduct, setSelectedProduct] = useState<ProductsDTO>();
+    const discountValue = discount ? 1 - (discount / 100) : 1;
+    const productValue = product.preco * discountValue;
+    const totalValue = (product.preco * quantity) * discountValue;
+
+    function handleButtonPressed() {
+        setListOfProducts([
+            ...listOfProducts,
+            {
+                produto: product,
+                discount,
+                quantidade: quantity,
+            }
+        ]);
+        closeModal();
+    }
 
     useEffect(() => {
         api.get("/produtos")
             .then((response) => {
                 setProducts(response.data);
             });
-    }, [])
+    }, []);
 
     return (
         <ModalContainer >
@@ -68,7 +85,7 @@ export function SelectProductModal({ closeModal }: SelectProductModalProps) {
                         data={products}
                         labelField="nome"
                         valueField="nome"
-                        onChange={(item: ProductsDTO) => setSelectedProduct(item)}
+                        onChange={(item: ProductsDTO) => setProduct(item)}
                         placeholder={'Selecione o produto'}
                     />
                     <DetailsContainer>
@@ -77,6 +94,8 @@ export function SelectProductModal({ closeModal }: SelectProductModalProps) {
                                 title='Quantidade'
                                 placeholder='0'
                                 keyboardType='numeric'
+                                value={String(quantity)}
+                                onChangeText={(text: string) => setQuantity(Number(text))}
                             />
                         </InputContainer>
                         <InputContainer>
@@ -84,27 +103,30 @@ export function SelectProductModal({ closeModal }: SelectProductModalProps) {
                                 title='Desconto'
                                 placeholder='10%'
                                 keyboardType='numeric'
+                                value={String(discount)}
+                                onChangeText={(text: string) => setDiscount(Number(text))}
                             />
                         </InputContainer>
                     </DetailsContainer>
 
 
                 </Content>
-                {selectedProduct && <ProductDetailsContainer>
+                {(Object.keys(product).length !== 0) && <ProductDetailsContainer>
                     <ProductDetails>
                         <Label>Valor unitário:</Label>
-                        <Value>R$ {selectedProduct.preco}</Value>
+                        <Value>R$ {productValue.toFixed(2)}</Value>
                     </ProductDetails>
                     <ProductDetails>
                         <Label>Valor total:</Label>
-                        <Value>R$ {selectedProduct.preco * 10}</Value>
+                        <Value>R$ {totalValue.toFixed(2)}</Value>
                     </ProductDetails>
                 </ProductDetailsContainer>}
 
                 <StyledButton
                     style={{ marginBottom: 20 }}
                     title='Adicionar produto'
-                    onPress={() => console.log("Clicado")}
+                    onPress={() => handleButtonPressed()}
+                    enabled={(Object.keys(product).length !== 0 && !!quantity)}
                 />
 
             </Container>
