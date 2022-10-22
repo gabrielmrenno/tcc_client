@@ -42,6 +42,16 @@ export function SelectProductModal({
     const [discount, setDiscount] = useState(0);
     const [quantity, setQuantity] = useState(0);
 
+    const productsOfList = listOfProducts.map(item => item.product);
+    const filteredProducts = products.filter(item => {
+        if (Object.keys(productsOfList).length !== 0) {
+            console.log(Object.keys(productsOfList).length);
+            return productsOfList.every(product => item.id !== product.id)
+        } else {
+            return item;
+        }
+    });
+
     const discountValue = discount ? 1 - (discount / 100) : 1;
     const productValue = product.preco * discountValue;
     const totalValue = (product.preco * quantity) * discountValue;
@@ -84,7 +94,7 @@ export function SelectProductModal({
                 </SearchProducts>
                 <Content>
                     <DropdownProducts
-                        data={products}
+                        data={filteredProducts}
                         labelField="nome"
                         valueField="nome"
                         onChange={(item: ProductsDTO) => setProduct(item)}
