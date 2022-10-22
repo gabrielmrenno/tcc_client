@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Modal, FlatList } from 'react-native';
 
-import { OrderProductDTO } from "../../types/DTOs/OrderProductDTO";
+import { OrderProductModel } from "../../types/Models/OrderProductModel";
 
 import { ProductCard } from "../../components/ScreenComponents/ProductCard";
 import { Customer, SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
@@ -28,7 +28,7 @@ export function NewOrder() {
     const [openSetProductModal, setOpenSetProductModal] = useState(false);
 
     const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
-    const [listOfProducts, setListOfProducts] = useState<OrderProductDTO[]>([] as OrderProductDTO[]);
+    const [listOfProducts, setListOfProducts] = useState<OrderProductModel[]>([] as OrderProductModel[]);
 
     const weights = listOfProducts.map((current) => current.totalWeight);
     const totalWeight = weights.reduce((current, acc) => acc += current, 0);

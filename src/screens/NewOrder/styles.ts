@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-import { OrderProductDTO } from "../../types/DTOs/OrderProductDTO";
+import { OrderProductModel } from "../../types/Models/OrderProductModel";
 
 interface FinishOrderProps extends RectButtonProps {
     children: React.ReactNode[];
@@ -24,7 +24,7 @@ export const HeaderTitle = styled.Text`
     font-weight: 500;
 `;
 
-export const ProductList = styled(FlatList<OrderProductDTO>)`
+export const ProductList = styled(FlatList<OrderProductModel>)`
     margin-bottom: ${RFValue(95)}px;
     margin-top: ${RFValue(20)}px;
 `;

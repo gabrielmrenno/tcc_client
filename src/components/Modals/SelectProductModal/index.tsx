@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 
-import { ProductsDTO } from '../../../types/DTOs/ProductsDTO';
-import { OrderProductDTO } from "../../../types/DTOs/OrderProductDTO";
+import { ProductsModel } from '../../../types/Models/ProductsModel';
+import { OrderProductModel } from "../../../types/Models/OrderProductModel";
 import { api } from '../../../services/api';
 
 import { InputIcon } from '../../Form/InputIcon';
@@ -28,8 +28,8 @@ import {
 
 interface SelectProductModalProps {
     closeModal: () => void;
-    listOfProducts: OrderProductDTO[];
-    setListOfProducts: (orderProduct: OrderProductDTO[]) => void;
+    listOfProducts: OrderProductModel[];
+    setListOfProducts: (orderProduct: OrderProductModel[]) => void;
 }
 
 export function SelectProductModal({
@@ -37,19 +37,19 @@ export function SelectProductModal({
     listOfProducts,
     setListOfProducts
 }: SelectProductModalProps) {
-    const [products, setProducts] = useState<ProductsDTO[]>([] as ProductsDTO[]);
-    const [product, setProduct] = useState<ProductsDTO>({} as ProductsDTO);
+    const [products, setProducts] = useState<ProductsModel[]>([] as ProductsModel[]);
+    const [product, setProduct] = useState<ProductsModel>({} as ProductsModel);
     const [discount, setDiscount] = useState(0);
     const [quantity, setQuantity] = useState(0);
 
-    const productsOfList = listOfProducts.map(item => item.product);
     const filteredProducts = products.filter(item => {
-        if (Object.keys(productsOfList).length !== 0) {
-            console.log(Object.keys(productsOfList).length);
-            return productsOfList.every(product => item.id !== product.id)
-        } else {
-            return item;
-        }
+        return listOfProducts.every(list => {
+            if (list.product) {
+                return item.id !== list.product.id
+            } else {
+                return item;
+            }
+        })
     });
 
     const discountValue = discount ? 1 - (discount / 100) : 1;
@@ -97,7 +97,7 @@ export function SelectProductModal({
                         data={filteredProducts}
                         labelField="nome"
                         valueField="nome"
-                        onChange={(item: ProductsDTO) => setProduct(item)}
+                        onChange={(item: ProductsModel) => setProduct(item)}
                         placeholder={'Selecione o produto'}
                     />
                     <DetailsContainer>
@@ -123,7 +123,7 @@ export function SelectProductModal({
 
 
                 </Content>
-                {(Object.keys(product).length !== 0) && <ProductDetailsContainer>
+                {(product.id) && <ProductDetailsContainer>
                     <ProductDetails>
                         <Label>Valor unitário:</Label>
                         <Value>R$ {productValue.toFixed(2)}</Value>
@@ -138,7 +138,7 @@ export function SelectProductModal({
                     style={{ marginBottom: 20 }}
                     title='Adicionar produto'
                     onPress={() => handleButtonPressed()}
-                    enabled={(Object.keys(product).length !== 0 && !!quantity)}
+                    enabled={!!product.id && !!quantity}
                 />
 
             </Container>

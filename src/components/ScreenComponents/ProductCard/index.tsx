@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import { OrderProductDTO } from '../../../types/DTOs/OrderProductDTO';
+import { OrderProductModel } from '../../../types/Models/OrderProductModel';
 
 import {
     Container,
@@ -18,7 +18,7 @@ import {
 } from './styles';
 
 interface ProductCardProps {
-    product: OrderProductDTO;
+    product: OrderProductModel;
 }
 
 export function ProductCard({ product }: ProductCardProps) {

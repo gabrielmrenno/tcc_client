@@ -1,4 +1,4 @@
-export interface ProductsDTO {
+export interface ProductsModel {
     "createdAt": string,
     "grupo": string,
     "id": string,
