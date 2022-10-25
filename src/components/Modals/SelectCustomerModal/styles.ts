@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons'
 
-export const BackgroundContainer = styled.View`
+export const BackgroundContainer = styled.TouchableOpacity`
     flex: 1;
     background-color: rgba(43, 43, 43, 0.8);
 

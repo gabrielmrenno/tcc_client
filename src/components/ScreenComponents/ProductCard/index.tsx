@@ -19,9 +19,21 @@ import {
 
 interface ProductCardProps {
     product: OrderProductModel;
+    setSelectedProduct: (product: OrderProductModel) => void;
+    handleOpenSetProductModal: () => void;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({
+    product,
+    setSelectedProduct,
+    handleOpenSetProductModal
+}: ProductCardProps) {
+
+    function handleOnPressEditButton() {
+        setSelectedProduct(product);
+        handleOpenSetProductModal();
+    }
+
     return (
         <Container>
             <Header>
@@ -30,7 +42,7 @@ export function ProductCard({ product }: ProductCardProps) {
                     <Title>{product.product.nome}</Title>
                 </HeaderContainer>
                 <IconsContainer>
-                    <TouchableOpacity onPress={() => console.log("Edit")}>
+                    <TouchableOpacity onPress={() => handleOnPressEditButton()}>
                         <Icon
                             name="edit"
                         />

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, Modal, FlatList } from 'react-native';
+import { View, Modal } from 'react-native';
 
 import { OrderProductModel } from "../../types/Models/OrderProductModel";
+import { CustomerModel } from "../../types/Models/CustomerModal";
 
 import { ProductCard } from "../../components/ScreenComponents/ProductCard";
-import { Customer, SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
+import { SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
 import { TitlePlus } from "../../components/ScreenComponents/TitlePlus";
 import { CustomerCard } from "../../components/ScreenComponents/CustomerCard";
 
@@ -26,8 +27,10 @@ import {
 export function NewOrder() {
     const [openSetCustomerModal, setOpenSetCustomerModal] = useState(false);
     const [openSetProductModal, setOpenSetProductModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-    const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
+    const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>();
+    const [selectedProduct, setSelectedProduct] = useState<OrderProductModel>({} as OrderProductModel);
     const [listOfProducts, setListOfProducts] = useState<OrderProductModel[]>([] as OrderProductModel[]);
 
     const weights = listOfProducts.map((current) => current.totalWeight);
@@ -58,7 +61,10 @@ export function NewOrder() {
                 </HeaderTitle>
                 <View>
                     {!!selectedCustomer
-                        ? <CustomerCard customer={selectedCustomer} />
+                        ? <CustomerCard
+                            customer={selectedCustomer}
+                            handleOpenSetCustomerModal={handleOpenSetCustomerModal}
+                        />
                         : <TitlePlus
                             title="Selecionar Cliente"
                             onPress={handleOpenSetCustomerModal}
@@ -71,12 +77,17 @@ export function NewOrder() {
 
                 <ProductList
                     data={listOfProducts}
-                    keyExtractor={(item) => item.product.id}
-                    renderItem={({ item }) => <ProductCard product={item} />}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={({ item }) =>
+                        <ProductCard
+                            product={item}
+                            setSelectedProduct={setSelectedProduct}
+                            handleOpenSetProductModal={handleOpenSetProductModal}
+                        />}
                 />
             </Container>
 
-            {(!!selectedCustomer && Object.keys(listOfProducts).length !== 0) && <FooterResults>
+            {(!!selectedCustomer && listOfProducts.length !== 0) && <FooterResults>
                 <Line>
                     <Description>Peso Total:</Description>
                     <Description>{totalWeight.toFixed(0)} Kg</Description>
@@ -110,6 +121,8 @@ export function NewOrder() {
             >
                 <SelectProductModal
                     closeModal={handleCloseSetProductModal}
+                    selectedProduct={selectedProduct}
+                    setSelectedProduct={setSelectedProduct}
                     listOfProducts={listOfProducts}
                     setListOfProducts={setListOfProducts}
                 />

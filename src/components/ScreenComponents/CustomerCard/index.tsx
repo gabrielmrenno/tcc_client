@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Customer } from '../../Modals/SelectCustomerModal';
+import { CustomerModel } from '../../../types/Models/CustomerModal';
 import {
     Container,
     Header,
@@ -15,10 +15,11 @@ import {
 } from './styles';
 
 interface CustomerCardProps {
-    customer: Customer;
+    customer: CustomerModel;
+    handleOpenSetCustomerModal: () => void;
 }
 
-export function CustomerCard({ customer }: CustomerCardProps) {
+export function CustomerCard({ customer, handleOpenSetCustomerModal }: CustomerCardProps) {
     return (
         <Container>
             <Header>
@@ -27,7 +28,7 @@ export function CustomerCard({ customer }: CustomerCardProps) {
                     <Title>Detalhes do Cliente</Title>
                 </HeaderContainer>
                 <IconsContainer>
-                    <TouchableOpacity onPress={() => console.log("Edit")}>
+                    <TouchableOpacity onPress={() => handleOpenSetCustomerModal()}>
                         <Icon
                             name="edit"
                         />

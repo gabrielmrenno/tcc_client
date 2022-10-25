@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList } from "react-native";
 
 import { api } from "../../../services/api";
+import { CustomerModel } from "../../../types/Models/CustomerModal";
+
 import { InputIcon } from "../../Form/InputIcon";
 import { StyledButton } from "../../Form/StyledButton";
 import { Card } from "../../ScreenComponents/Card";
@@ -16,29 +18,10 @@ import {
     CloseIcon,
 } from "./styles";
 
-export interface Customer {
-    id: string;
-    nome: string;
-    nomeFantasia: string;
-    tipoCliente: string;
-    endereco: string;
-    bairro: string;
-    cidade: string;
-    cep: string;
-    telefone: string;
-    email: string;
-    nomeContato?: string;
-    telefoneContato?: string;
-    cnpj: string;
-    desconto: number;
-    createdAt: string;
-    updatedAt: string;
-}
-
 interface SelectCustomerModalProps {
     closeModal: () => void;
-    selectedCustomer: Customer | undefined;
-    setSelectedCustomer: (customer: Customer) => void;
+    selectedCustomer: CustomerModel | undefined;
+    setSelectedCustomer: (customer: CustomerModel) => void;
 }
 
 
@@ -47,8 +30,10 @@ export function SelectCustomerModal({
     selectedCustomer,
     setSelectedCustomer
 }: SelectCustomerModalProps) {
-    const [customers, setCustomers] = useState<Customer[]>([] as Customer[]);
-    const [activeCustomer, setActiveCustomer] = useState<Customer>();
+    const [customers, setCustomers] = useState<CustomerModel[]>([] as CustomerModel[]);
+    const [activeCustomer, setActiveCustomer] = useState<CustomerModel>();
+
+    const mode = selectedCustomer?.id ? 'Editar' : 'Adicionar';
 
     const [search, setSearch] = useState("");
 
@@ -61,23 +46,28 @@ export function SelectCustomerModal({
             .then((response) => {
                 setCustomers(response.data);
             });
+        if (mode === 'Editar') {
+            setActiveCustomer(selectedCustomer);
+        }
     }, [])
 
-    function handleSelectCustomer(item: Customer) {
+    function handleSelectCustomer(item: CustomerModel) {
         setSelectedCustomer(item);
     }
-    function handleSelectActiveCustomer(item: Customer) {
+    function handleSelectActiveCustomer(item: CustomerModel) {
         setActiveCustomer(item);
     }
 
     return (
         <>
-            <BackgroundContainer />
+            <BackgroundContainer
+                onPress={() => closeModal()}
+            />
             <Container>
                 <SearchCustomer>
                     <HeaderContainer>
                         <SearchText>
-                            Adicionar Cliente
+                            {mode} Cliente
                         </SearchText>
                         <CloseIcon
                             name="x"
@@ -110,10 +100,14 @@ export function SelectCustomerModal({
                 />
             </Container>
             <Footer>
-                <StyledButton title="Selecionar Cliente" onPress={() => {
-                    activeCustomer && handleSelectCustomer(activeCustomer);
-                    closeModal();
-                }} />
+                <StyledButton
+                    title={`${mode} Cliente`}
+                    onPress={() => {
+                        activeCustomer && handleSelectCustomer(activeCustomer);
+                        closeModal();
+                    }}
+                    enabled={!!activeCustomer?.id}
+                />
             </Footer>
 
         </>
