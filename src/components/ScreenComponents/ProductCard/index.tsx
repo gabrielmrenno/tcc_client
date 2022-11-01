@@ -20,18 +20,27 @@ import {
 interface ProductCardProps {
     product: OrderProductModel;
     setSelectedProduct: (product: OrderProductModel) => void;
+    setDeleteMode: (deleteMode: "produto" | "cliente") => void;
     handleOpenSetProductModal: () => void;
+    handleOpenDeleteModal: () => void;
 }
 
 export function ProductCard({
     product,
     setSelectedProduct,
-    handleOpenSetProductModal
+    setDeleteMode,
+    handleOpenSetProductModal,
+    handleOpenDeleteModal
 }: ProductCardProps) {
 
     function handleOnPressEditButton() {
         setSelectedProduct(product);
         handleOpenSetProductModal();
+    }
+
+    function handleOnPressDeleteButton() {
+        setDeleteMode("produto");
+        handleOpenDeleteModal();
     }
 
     return (
@@ -47,7 +56,7 @@ export function ProductCard({
                             name="edit"
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => console.log("Delete")}>
+                    <TouchableOpacity onPress={() => handleOnPressDeleteButton()}>
                         <Icon
                             name="trash"
                         />

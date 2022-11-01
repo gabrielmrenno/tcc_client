@@ -16,10 +16,23 @@ import {
 
 interface CustomerCardProps {
     customer: CustomerModel;
+    setDeleteMode: (deleteMode: "produto" | "cliente") => void;
     handleOpenSetCustomerModal: () => void;
+    handleOpenDeleteModal: () => void;
 }
 
-export function CustomerCard({ customer, handleOpenSetCustomerModal }: CustomerCardProps) {
+export function CustomerCard({
+    customer,
+    setDeleteMode,
+    handleOpenSetCustomerModal,
+    handleOpenDeleteModal,
+}: CustomerCardProps) {
+
+    function handleOnPressDeleteButton() {
+        setDeleteMode("cliente");
+        handleOpenDeleteModal();
+    }
+
     return (
         <Container>
             <Header>
@@ -33,7 +46,7 @@ export function CustomerCard({ customer, handleOpenSetCustomerModal }: CustomerC
                             name="edit"
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => console.log("Delete")}>
+                    <TouchableOpacity onPress={() => handleOnPressDeleteButton()}>
                         <Icon
                             name="trash"
                         />

@@ -5,11 +5,13 @@ import { OrderProductModel } from "../../types/Models/OrderProductModel";
 import { CustomerModel } from "../../types/Models/CustomerModal";
 
 import { ProductCard } from "../../components/ScreenComponents/ProductCard";
-import { SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
 import { TitlePlus } from "../../components/ScreenComponents/TitlePlus";
 import { CustomerCard } from "../../components/ScreenComponents/CustomerCard";
 
+import { SelectCustomerModal } from "../../components/Modals/SelectCustomerModal";
 import { SelectProductModal } from "../../components/Modals/SelectProductModal";
+import { DeleteModal } from "../../components/Modals/DeleteModal";
+
 import {
     Container,
     HeaderTitle,
@@ -33,6 +35,8 @@ export function NewOrder() {
     const [selectedProduct, setSelectedProduct] = useState<OrderProductModel>({} as OrderProductModel);
     const [listOfProducts, setListOfProducts] = useState<OrderProductModel[]>([] as OrderProductModel[]);
 
+    const [deleteMode, setDeleteMode] = useState<("cliente" | "produto")>("cliente");
+
     const weights = listOfProducts.map((current) => current.totalWeight);
     const totalWeight = weights.reduce((current, acc) => acc += current, 0);
 
@@ -53,6 +57,13 @@ export function NewOrder() {
         setOpenSetProductModal(false);
     }
 
+    function handleOpenDeleteModal() {
+        setOpenDeleteModal(true);
+    }
+    function handleCloseDeleteModal() {
+        setOpenDeleteModal(false);
+    }
+
     return (
         <>
             <Container>
@@ -63,7 +74,9 @@ export function NewOrder() {
                     {!!selectedCustomer
                         ? <CustomerCard
                             customer={selectedCustomer}
+                            setDeleteMode={setDeleteMode}
                             handleOpenSetCustomerModal={handleOpenSetCustomerModal}
+                            handleOpenDeleteModal={handleOpenDeleteModal}
                         />
                         : <TitlePlus
                             title="Selecionar Cliente"
@@ -81,8 +94,10 @@ export function NewOrder() {
                     renderItem={({ item }) =>
                         <ProductCard
                             product={item}
+                            setDeleteMode={setDeleteMode}
                             setSelectedProduct={setSelectedProduct}
                             handleOpenSetProductModal={handleOpenSetProductModal}
+                            handleOpenDeleteModal={handleOpenDeleteModal}
                         />}
                 />
             </Container>
@@ -125,6 +140,21 @@ export function NewOrder() {
                     setSelectedProduct={setSelectedProduct}
                     listOfProducts={listOfProducts}
                     setListOfProducts={setListOfProducts}
+                />
+            </Modal>
+
+            <Modal
+                transparent={true}
+                presentationStyle="overFullScreen"
+                visible={openDeleteModal}
+            >
+                <DeleteModal
+                    closeModal={handleCloseDeleteModal}
+                    deleteMode={deleteMode}
+                // selectedProduct={selectedProduct}
+                // setSelectedProduct={setSelectedProduct}
+                // listOfProducts={listOfProducts}
+                // setListOfProducts={setListOfProducts}
                 />
             </Modal>
         </>
