@@ -31,7 +31,7 @@ export function NewOrder() {
     const [openSetProductModal, setOpenSetProductModal] = useState(false);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-    const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>();
+    const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>({} as CustomerModel);
     const [selectedProduct, setSelectedProduct] = useState<OrderProductModel>({} as OrderProductModel);
     const [listOfProducts, setListOfProducts] = useState<OrderProductModel[]>([] as OrderProductModel[]);
 
@@ -71,7 +71,7 @@ export function NewOrder() {
                     Novo Pedido
                 </HeaderTitle>
                 <View>
-                    {!!selectedCustomer
+                    {!!selectedCustomer.id
                         ? <CustomerCard
                             customer={selectedCustomer}
                             setDeleteMode={setDeleteMode}
@@ -149,12 +149,14 @@ export function NewOrder() {
                 visible={openDeleteModal}
             >
                 <DeleteModal
-                    closeModal={handleCloseDeleteModal}
                     deleteMode={deleteMode}
-                // selectedProduct={selectedProduct}
-                // setSelectedProduct={setSelectedProduct}
-                // listOfProducts={listOfProducts}
-                // setListOfProducts={setListOfProducts}
+                    product={selectedProduct}
+                    customer={selectedCustomer}
+                    listOfProducts={listOfProducts}
+                    closeModal={handleCloseDeleteModal}
+                    setSelectedProduct={setSelectedProduct}
+                    setListOfProducts={setListOfProducts}
+                    setSelectedCustomer={setSelectedCustomer}
                 />
             </Modal>
         </>

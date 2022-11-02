@@ -47,6 +47,7 @@ export const SearchText = styled.Text`
     font-weight: 500;
 `;
 
+
 export const Content = styled.View`
   margin-bottom: ${RFValue(16)}px;
 `;
@@ -54,6 +55,12 @@ export const Content = styled.View`
 export const ContentText = styled.Text`
   font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.white}
+`;
+
+export const HighlightText = styled.Text`
+  font-size: ${RFValue(18)}px;
+  color: ${({ theme }) => theme.colors.primary};
+  font-weight: 500;
 `;
 
 export const Footer = styled.View`

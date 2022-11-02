@@ -1,6 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
 import { StyledButton } from '../../Form/StyledButton';
+
+import { CustomerModel } from '../../../types/Models/CustomerModal';
+import { OrderProductModel } from '../../../types/Models/OrderProductModel';
 
 import {
     ModalContainer,
@@ -11,19 +13,52 @@ import {
     SearchText,
     Content,
     ContentText,
+    HighlightText,
     Footer,
     ButtonContainer
 } from './styles';
 
 interface DeleteModalProps {
     deleteMode: "produto" | "cliente";
+    product: OrderProductModel;
+    customer: CustomerModel;
+    listOfProducts: OrderProductModel[];
     closeModal: () => void;
+    setSelectedProduct: (product: OrderProductModel) => void;
+    setSelectedCustomer: (customer: CustomerModel) => void;
+    setListOfProducts: (product: OrderProductModel[]) => void;
 }
 
 export function DeleteModal({
+    deleteMode,
+    product,
+    customer,
+    listOfProducts,
     closeModal,
-    deleteMode
+    setSelectedProduct,
+    setSelectedCustomer,
+    setListOfProducts
+
 }: DeleteModalProps) {
+    const name = deleteMode === "produto" ? product.product.nome : customer.nome;
+
+    function handleOnPressCancelButton() {
+        setSelectedProduct({} as OrderProductModel);
+        closeModal();
+    }
+
+    function handleOnPressDeleteButton() {
+        setSelectedProduct({} as OrderProductModel);
+        closeModal();
+
+        if (deleteMode === "cliente") {
+            setSelectedCustomer({} as CustomerModel);
+        } else {
+            const newListOfProducts = listOfProducts.filter(eachProduct => eachProduct.id !== product.id)
+            setListOfProducts(newListOfProducts);
+        }
+    }
+
     return (
         <ModalContainer>
             <BackgroundContainer
@@ -38,20 +73,20 @@ export function DeleteModal({
                     />
                 </HeaderContainer>
                 <Content>
-                    <ContentText>Deseja remover o {deleteMode} "NOME" do pedido?</ContentText>
+                    <ContentText>Deseja remover o {deleteMode} <HighlightText>{name}</HighlightText> do pedido?</ContentText>
                 </Content>
                 <Footer>
                     <ButtonContainer>
                         <StyledButton
                             title='Cancelar'
-                            onPress={() => console.log("Removeu1")}
+                            onPress={() => handleOnPressCancelButton()}
                             reverseColor
                         />
                     </ButtonContainer>
                     <ButtonContainer>
                         <StyledButton
                             title='Remover'
-                            onPress={() => console.log("Removeu2")}
+                            onPress={() => handleOnPressDeleteButton()}
                         />
                     </ButtonContainer>
                 </Footer>

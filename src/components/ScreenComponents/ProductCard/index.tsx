@@ -40,6 +40,7 @@ export function ProductCard({
 
     function handleOnPressDeleteButton() {
         setDeleteMode("produto");
+        setSelectedProduct(product);
         handleOpenDeleteModal();
     }
 
